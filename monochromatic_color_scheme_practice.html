@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-slate-900">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeGym - Thực Hành Phối Màu Đơn Tông (Monochromatic Color Scheme)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    code, pre {
+      font-family: 'Fira Code', monospace;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+    .preview-device-desktop { width: 100%; }
+    .preview-device-tablet { width: 768px; margin: 0 auto; }
+    .preview-device-mobile { width: 375px; margin: 0 auto; }
+  </style>
+</head>
+<body class="h-full text-slate-100 flex flex-col antialiased selection:bg-cyan-500 selection:text-white">
+
+  <!-- TOP APP HEADER -->
+  <header class="bg-slate-950 border-b border-slate-800 px-4 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center shadow-lg shadow-cyan-500/20 ring-1 ring-white/20">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-23" />
+        </svg>
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="font-bold text-lg text-white tracking-tight">CodeGym Practice</h1>
+          <span class="px-2 py-0.5 text-xs font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 rounded-full">Bài thực hành Màu Sắc</span>
+        </div>
+        <p class="text-xs text-slate-400">Ứng dụng tương tác & kiểm tra Phối màu Đơn tông (Monochromatic Palette)</p>
+      </div>
+    </div>
+
+    <!-- MAIN NAV TABS -->
+    <div class="flex items-center bg-slate-900 p-1 rounded-xl border border-slate-800 overflow-x-auto max-w-full">
+      <button onclick="switchTab('sandbox')" id="tab-sandbox" class="tab-btn px-4 py-2 text-xs sm:text-sm font-medium rounded-lg transition-all flex items-center gap-2 bg-cyan-600 text-white shadow-md">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        <span>1. Live Sandbox</span>
+      </button>
+      <button onclick="switchTab('palette')" id="tab-palette" class="tab-btn px-4 py-2 text-xs sm:text-sm font-medium rounded-lg text-slate-400 hover:text-white transition-all flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-23"/></svg>
+        <span>2. Bảng Màu & WCAG</span>
+      </button>
+      <button onclick="switchTab('code')" id="tab-code" class="tab-btn px-4 py-2 text-xs sm:text-sm font-medium rounded-lg text-slate-400 hover:text-white transition-all flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        <span>3. Mã Nguồn HTML/CSS</span>
+      </button>
+      <button onclick="switchTab('guide')" id="tab-guide" class="tab-btn px-4 py-2 text-xs sm:text-sm font-medium rounded-lg text-slate-400 hover:text-white transition-all flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <span>4. Hướng Dẫn Nộp Bài</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTROLS TOOLBAR: THEMES & PICKER -->
+  <section class="bg-slate-900 border-b border-slate-800 px-4 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
+    <!-- Theme Presets -->
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="text-xs font-semibold uppercase tracking-wider text-slate-400 mr-2 flex items-center gap-1">
+        <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+        Chọn Theme Đơn Tông:
+      </span>
+
+      <!-- Theme 1: CodeGym Logo -->
+      <button onclick="selectTheme('codegym')" id="btn-theme-codegym" class="theme-btn px-3 py-1.5 rounded-lg border border-cyan-500/50 bg-cyan-950/60 text-cyan-200 text-xs font-medium flex items-center gap-2 transition hover:border-cyan-400">
+        <span class="w-3.5 h-3.5 rounded-full bg-[#00ADEE] shadow-sm inline-block"></span>
+        Theme 1: Xanh CodeGym (#00ADEE)
+      </button>
+
+      <!-- Theme 2: Emerald Green -->
+      <button onclick="selectTheme('emerald')" id="btn-theme-emerald" class="theme-btn px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800/80 text-slate-300 text-xs font-medium flex items-center gap-2 transition hover:border-emerald-500/50">
+        <span class="w-3.5 h-3.5 rounded-full bg-[#10B981] shadow-sm inline-block"></span>
+        Theme 2: Xanh Lục Bảo (#10B981)
+      </button>
+
+      <!-- Theme 3: Deep Purple -->
+      <button onclick="selectTheme('purple')" id="btn-theme-purple" class="theme-btn px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800/80 text-slate-300 text-xs font-medium flex items-center gap-2 transition hover:border-purple-500/50">
+        <span class="w-3.5 h-3.5 rounded-full bg-[#7C3AED] shadow-sm inline-block"></span>
+        Theme 3: Tím Đơn Sắc (#7C3AED)
+      </button>
+
+      <!-- Theme 4: Custom Primary Color Picker -->
+      <div class="flex items-center gap-2 bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1">
+        <label for="customColorPicker" class="text-xs text-slate-300 font-medium cursor-pointer flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/></svg>
+          Tự chọn màu Bậc 1:
+        </label>
+        <input type="color" id="customColorPicker" value="#00ADEE" onchange="handleCustomColorChange(this.value)" class="w-6 h-6 rounded cursor-pointer bg-transparent border-0" />
+        <span id="customColorHexDisplay" class="text-xs font-mono text-cyan-400 uppercase">#00ADEE</span>
+      </div>
+    </div>
+
+    <!-- Quick Actions / Viewport controls for sandbox -->
+    <div class="flex items-center gap-2" id="sandbox-viewport-controls">
+      <span class="text-xs text-slate-400">Khung nhìn:</span>
+      <div class="bg-slate-950 border border-slate-800 rounded-lg p-0.5 flex">
+        <button onclick="setPreviewDevice('desktop')" id="dev-btn-desktop" class="p-1.5 text-cyan-400 bg-slate-800 rounded" title="Desktop View">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        </button>
+        <button onclick="setPreviewDevice('tablet')" id="dev-btn-tablet" class="p-1.5 text-slate-400 hover:text-white rounded" title="Tablet View">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+        </button>
+        <button onclick="setPreviewDevice('mobile')" id="dev-btn-mobile" class="p-1.5 text-slate-400 hover:text-white rounded" title="Mobile View">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-1 overflow-y-auto p-4 lg:p-8 bg-slate-950">
+
+    <!-- TAB 1: SANDBOX LIVE PREVIEW -->
+    <div id="content-sandbox" class="tab-content block max-w-7xl mx-auto transition-all">
+      
+      <!-- Step Guidance Banner -->
+      <div class="mb-6 bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-sm">
+            i
+          </div>
+          <div>
+            <h2 class="text-sm font-semibold text-white">Xem Trước Giao Diện Theo Quy Tắc Phối Màu Bài Thực Hành</h2>
+            <p class="text-xs text-slate-400">Header & Hero (Bậc 4) • Badge ON SALE/PREVIEW (Bậc 1/2) • Khóa Học/Sách (Bậc 7) • Footer (Bậc 9)</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-full border border-slate-700">Màu chữ mặc định: <strong class="text-white">Đen #000000</strong> & <strong class="text-white">Trắng #FFFFFF</strong></span>
+        </div>
+      </div>
+
+      <!-- BROWSER FRAME MOCKUP -->
+      <div class="bg-slate-900 rounded-2xl border border-slate-800 shadow-2xl overflow-hidden transition-all duration-300" id="preview-container-wrapper">
+        
+        <!-- Browser Bar -->
+        <div class="bg-slate-900 border-b border-slate-800 px-4 py-3 flex items-center justify-between gap-4">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
+          </div>
+          <div class="flex-1 max-w-xl bg-slate-950 border border-slate-800 rounded-lg px-3 py-1 text-xs text-slate-400 flex items-center justify-between">
+            <span class="flex items-center gap-2 font-mono truncate">
+              <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+              https://codegym-vn.github.io/democodegym/web/Pra.html
+            </span>
+            <span class="text-[10px] bg-slate-800 text-cyan-300 px-2 py-0.5 rounded uppercase font-semibold">Live Preview</span>
+          </div>
+          <div class="w-16"></div>
+        </div>
+
+        <!-- MOCK WEBPAGE CONTAINER (Dynamic styling applied here) -->
+        <div id="mock-webpage" class="w-full text-black bg-white transition-all duration-300">
+
+          <!-- BƯỚC 2: HEADER & HERO BANNER (Màu Bậc 4) -->
+          <header id="mock-header" class="px-6 py-6 transition-colors duration-300 shadow-md" style="background-color: #00BFF2; color: #ffffff;">
+            <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+              
+              <!-- Brand Logo & Title -->
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center font-black text-2xl text-white shadow">
+                  CG
+                </div>
+                <div>
+                  <div class="text-2xl font-extrabold tracking-tight">CodeGym Library & Store</div>
+                  <div class="text-xs opacity-90 font-medium">Hệ thống đào tạo Lập trình Hiện đại</div>
+                </div>
+              </div>
+
+              <!-- Navigation Links -->
+              <nav class="flex items-center gap-6 font-medium text-sm">
+                <a href="#sale" class="hover:underline transition">Khuyến Mãi</a>
+                <a href="#content" class="hover:underline transition">Khóa Học & Sách</a>
+                <a href="#footer" class="hover:underline transition">Liên Hệ</a>
+                <button class="bg-black/80 text-white hover:bg-black px-4 py-2 rounded-lg text-xs font-semibold shadow transition">
+                  Đăng Nhập
+                </button>
+              </nav>
+            </div>
+
+            <!-- Hero Text Banner -->
+            <div class="max-w-6xl mx-auto mt-8 pt-6 border-t border-white/20 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div class="max-w-xl">
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/20 border border-white/30 mb-3">
+                  Bước 2: Màu Nền Header (Bậc 4)
+                </span>
+                <h2 class="text-3xl font-black leading-tight mb-2">Thực Hành Phối Màu Đơn Tông (Monochromatic)</h2>
+                <p class="text-sm opacity-90">Học cách tạo giao diện hài hòa, chuyên nghiệp bằng cách sử dụng các cấp độ nhạt dần từ một màu chủ đạo chính.</p>
+              </div>
+              <div class="bg-white/10 backdrop-blur border border-white/30 p-4 rounded-xl text-center min-w-[200px]">
+                <div class="text-xs uppercase font-semibold opacity-80">Mã Màu Hiện Tại (Bậc 4)</div>
+                <div id="mock-level4-hex" class="text-2xl font-mono font-bold mt-1">#00BFF2</div>
+              </div>
+            </div>
+          </header>
+
+          <!-- BƯỚC 3: ON SALE / PREVIEW BANNER (Màu Bậc 1 hoặc Bậc 2) -->
+          <section id="mock-sale-section" class="py-5 px-6 transition-colors duration-300 shadow-inner" style="background-color: #00ADEE; color: #ffffff;">
+            <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+              <div class="flex items-center gap-3">
+                <span class="bg-amber-400 text-slate-900 text-xs font-extrabold px-3 py-1 rounded-md shadow uppercase tracking-wide">
+                  🔥 ON SALE / PREVIEW
+                </span>
+                <div>
+                  <h3 class="text-lg font-bold">Bước 3: Phần Nổi Bật Ưu Đãi (Màu Nền Bậc 1 hoặc Bậc 2)</h3>
+                  <p class="text-xs opacity-90">Tạo điểm nhấn mạnh thu hút sự chú ý của người dùng bằng tông màu chủ đạo đậm nhất.</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-xs font-mono font-semibold bg-black/20 px-3 py-1.5 rounded-lg border border-white/20" id="mock-level1-hex">
+                  Bậc 1: #00ADEE
+                </span>
+                <button class="bg-white text-slate-900 font-bold px-4 py-1.5 rounded-lg text-xs shadow hover:bg-slate-100 transition">
+                  Xem Tất Cả Sách
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- BƯỚC 4 & BƯỚC 6: CONTENT SECTION (Màu Bậc 7 - Màu Chữ Đen) -->
+          <section id="mock-content-section" class="py-10 px-6 transition-colors duration-300" style="background-color: #8DD7F7; color: #000000;">
+            <div class="max-w-6xl mx-auto">
+              
+              <!-- Section Header -->
+              <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-black/10 pb-4">
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-widest text-slate-700">Bước 4: Nền Phần Nội Dung</span>
+                  <h3 class="text-2xl font-black text-slate-900">Danh Sách Khóa Học & Tài Liệu Nổi Bật (Màu Bậc 7)</h3>
+                  <p class="text-xs text-slate-800 mt-1">Màu nền Bậc 7 khá nhạt (#8DD7F7), giữ màu chữ ĐEN (#000000) để đạt độ tương phản tối ưu nhất.</p>
+                </div>
+                <div class="text-xs font-mono font-bold bg-white/60 px-3 py-1.5 rounded-lg border border-black/10" id="mock-level7-hex">
+                  Màu Bậc 7: #8DD7F7
+                </div>
+              </div>
+
+              <!-- Product Cards Grid -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Card 1 -->
+                <div class="bg-white rounded-xl p-5 shadow-lg border border-slate-200 flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-3">
+                      <span class="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded bg-slate-100 text-slate-700 border border-slate-200">E-Book</span>
+                      <span class="text-xs font-bold text-emerald-600">★ 4.9 (128 đánh giá)</span>
+                    </div>
+                    <div class="w-full h-36 bg-slate-100 rounded-lg mb-4 flex items-center justify-center text-slate-400 font-bold border border-slate-200">
+                      <svg class="w-12 h-12 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    </div>
+                    <h4 class="font-bold text-slate-900 text-base mb-1">Lập Trình Web Frontend Từ Đầu</h4>
+                    <p class="text-xs text-slate-600 mb-4 line-clamp-2">Hướng dẫn toàn diện về HTML5, CSS3, Flexbox, Grid và Phối màu giao diện bài bản.</p>
+                  </div>
+                  <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <div>
+                      <span class="text-xs text-slate-400 line-through">299.000đ</span>
+                      <span class="text-sm font-extrabold text-slate-900 block">149.000đ</span>
+                    </div>
+                    <button class="bg-slate-900 text-white text-xs font-bold px-3 py-2 rounded-lg hover:bg-slate-800 transition">Đăng Ký</button>
+                  </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-xl p-5 shadow-lg border border-slate-200 flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-3">
+                      <span class="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded bg-slate-100 text-slate-700 border border-slate-200">Video Course</span>
+                      <span class="text-xs font-bold text-emerald-600">★ 5.0 (210 đánh giá)</span>
+                    </div>
+                    <div class="w-full h-36 bg-slate-100 rounded-lg mb-4 flex items-center justify-center text-slate-400 font-bold border border-slate-200">
+                      <svg class="w-12 h-12 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <h4 class="font-bold text-slate-900 text-base mb-1">Cấu Trúc Dữ Liệu & Giải Thuật</h4>
+                    <p class="text-xs text-slate-600 mb-4 line-clamp-2">Luyện tư duy thuật toán nâng cao dành cho học viên CodeGym thực hành thực tế.</p>
+                  </div>
+                  <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <div>
+                      <span class="text-xs text-slate-400 line-through">499.000đ</span>
+                      <span class="text-sm font-extrabold text-slate-900 block">250.000đ</span>
+                    </div>
+                    <button class="bg-slate-900 text-white text-xs font-bold px-3 py-2 rounded-lg hover:bg-slate-800 transition">Học Ngay</button>
+                  </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-xl p-5 shadow-lg border border-slate-200 flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-3">
+                      <span class="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded bg-slate-100 text-slate-700 border border-slate-200">Bootcamp</span>
+                      <span class="text-xs font-bold text-emerald-600">★ 4.8 (95 đánh giá)</span>
+                    </div>
+                    <div class="w-full h-36 bg-slate-100 rounded-lg mb-4 flex items-center justify-center text-slate-400 font-bold border border-slate-200">
+                      <svg class="w-12 h-12 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                    </div>
+                    <h4 class="font-bold text-slate-900 text-base mb-1">Java Core Chuyên Sâu</h4>
+                    <p class="text-xs text-slate-600 mb-4 line-clamp-2">Xây dựng ứng dụng doanh nghiệp chuẩn Clean Code và kiến trúc hướng đối tượng.</p>
+                  </div>
+                  <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <div>
+                      <span class="text-xs text-slate-400 line-through">799.000đ</span>
+                      <span class="text-sm font-extrabold text-slate-900 block">399.000đ</span>
+                    </div>
+                    <button class="bg-slate-900 text-white text-xs font-bold px-3 py-2 rounded-lg hover:bg-slate-800 transition">Đăng Ký</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <!-- BƯỚC 5: FOOTER (Màu Bậc 9) -->
+          <footer id="mock-footer" class="py-8 px-6 border-t border-black/10 transition-colors duration-300" style="background-color: #C6E9FA; color: #1e293b;">
+            <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-bold text-sm">Bước 5: Footer Nền Màu Bậc 9</span>
+                  <span class="text-xs font-mono px-2 py-0.5 rounded bg-black/10 font-semibold" id="mock-level9-hex">#C6E9FA</span>
+                </div>
+                <p class="text-xs opacity-80">Tạo sự kết hợp giữa gam màu xám sáng nhạt với tông màu chính bậc 1. Giữ độ sáng và cân bằng cho trang web.</p>
+              </div>
+              <div class="text-xs opacity-75 text-right">
+                <p>© 2026 CodeGym Vietnam. Bài Thực Hành Sử Dụng Màu Sắc Trên Trang Web.</p>
+                <p class="mt-1">Nộp bài tập: Mã nguồn HTML/CSS tải lên GitHub / CodePen.</p>
+              </div>
+            </div>
+          </footer>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: PALETTE & WCAG CONTRAST -->
+    <div id="content-palette" class="tab-content hidden max-w-7xl mx-auto">
+      
+      <!-- Color Scale Breakdown Section -->
+      <div class="mb-8">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-23"/></svg>
+              Dải Màu Đơn Tông 9 Cấp Độ (9-Tier Monochromatic Scale)
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">Từ màu chính Bậc 1 nhạt dần đều đến Bậc 9. Được sử dụng chính xác theo các bước hướng dẫn CodeGym.</p>
+          </div>
+          <span class="text-xs font-mono bg-cyan-950 text-cyan-300 border border-cyan-800 px-3 py-1 rounded-lg" id="active-theme-label">
+            Theme: CodeGym Blue (#00ADEE)
+          </span>
+        </div>
+
+        <!-- 9-Tier Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-9 gap-3" id="palette-cards-grid">
+          <!-- JS will render 9 cards here -->
+        </div>
+      </div>
+
+      <!-- WCAG CONTRAST ANALYSIS TABLE -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+        <h3 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+          <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Phân Tích Độ Tương Phản WCAG 2.1 (Color Contrast Inspection)
+        </h3>
+        <p class="text-xs text-slate-400 mb-6">Đảm bảo độ dễ đọc (Legibility) giữa màu chữ và màu nền ở từng phần của bài thực hành.</p>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-950 text-slate-400 uppercase font-mono text-[11px] border-b border-slate-800">
+              <tr>
+                <th class="p-3">Thành phần (Section)</th>
+                <th class="p-3">Quy tắc bài thực hành</th>
+                <th class="p-3">Màu Nền (Background)</th>
+                <th class="p-3">Màu Chữ (Text)</th>
+                <th class="p-3">Tỷ lệ tương phản</th>
+                <th class="p-3">Đánh giá WCAG</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800" id="contrast-table-body">
+              <!-- JS will inject rows here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TAB 3: CODE EXPORT -->
+    <div id="content-code" class="tab-content hidden max-w-7xl mx-auto">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+        
+        <!-- Header & Copy Button -->
+        <div class="bg-slate-950 px-6 py-4 border-b border-slate-800 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-base font-bold text-white flex items-center gap-2">
+              <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              Mã Nguồn HTML/CSS Hoàn Chỉnh Cho Bài Thực Hành
+            </h2>
+            <p class="text-xs text-slate-400">Tự động cập nhật theo Theme/Màu bạn đã chọn. Bạn có thể sao chép để lưu thành file `.html` hoặc nộp lên CodePen/GitHub.</p>
+          </div>
+          <button onclick="copyGeneratedCode()" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-lg transition flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+            <span>Sao Chép Mã HTML (1-Click Copy)</span>
+          </button>
+        </div>
+
+        <!-- Code Display Container -->
+        <div class="p-6 bg-slate-950 overflow-x-auto">
+          <pre class="text-xs text-cyan-300 font-mono leading-relaxed" id="code-output-block"><code><!-- Code HTML sẽ hiện ở đây --></code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: SUBMISSION GUIDE -->
+    <div id="content-guide" class="tab-content hidden max-w-5xl mx-auto space-y-6">
+      
+      <!-- Guide Card 1: GitHub Submission -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-white">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-white">Cách 1: Nộp Bài Qua GitHub Repository (Khuyên Dùng)</h2>
+            <p class="text-xs text-slate-400">Các bước đưa mã nguồn lên GitHub theo đúng yêu cầu nộp bài của CodeGym</p>
+          </div>
+        </div>
+
+        <ol class="space-y-3 text-xs text-slate-300 list-decimal list-inside">
+          <li class="pl-2"><strong class="text-white">Tạo Repository Mới:</strong> Đăng nhập GitHub, nhấn nút <span class="text-cyan-400 font-mono">New Repository</span>. Đặt tên ví dụ: <code class="bg-slate-950 px-2 py-0.5 rounded text-cyan-300">codegym-color-practice</code>.</li>
+          <li class="pl-2"><strong class="text-white">Tạo File index.html:</strong> Trong repository, tạo file <code class="bg-slate-950 px-2 py-0.5 rounded text-cyan-300">index.html</code> và dán mã nguồn lấy ở Tab <strong class="text-cyan-400">"3. Mã Nguồn HTML/CSS"</strong>.</li>
+          <li class="pl-2"><strong class="text-white">Bật GitHub Pages (Tùy chọn xem web live):</strong> Vào <span class="text-cyan-400 font-mono">Settings -> Pages</span>, chọn Branch <code class="bg-slate-950 px-2 py-0.5 rounded text-cyan-300">main</code> và nhấn <span class="text-cyan-400 font-mono">Save</span>.</li>
+          <li class="pl-2"><strong class="text-white">Sao chép Link Nộp Bài:</strong> Sao chép đường link Repository GitHub (hoặc link GitHub Pages) và dán vào ô nộp bài của hệ thống CodeGym.</li>
+        </ol>
+      </div>
+
+      <!-- Guide Card 2: CodePen Submission -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-amber-400 font-bold text-lg">
+            CP
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-white">Cách 2: Nộp Bài Qua CodePen (Nhanh Gọn)</h2>
+            <p class="text-xs text-slate-400">Tạo bản demo chạy trực tiếp trên CodePen trong 1 phút</p>
+          </div>
+        </div>
+
+        <ol class="space-y-3 text-xs text-slate-300 list-decimal list-inside">
+          <li class="pl-2"><strong class="text-white">Truy cập CodePen:</strong> Mở trang <a href="https://codepen.io/pen/" target="_blank" class="text-cyan-400 underline">codepen.io/pen/</a>.</li>
+          <li class="pl-2"><strong class="text-white">Dán Mã HTML:</strong> Dán toàn bộ mã nguồn HTML lấy từ Tab <strong class="text-cyan-400">"3. Mã Nguồn HTML/CSS"</strong> vào khung <span class="text-cyan-400 font-mono">HTML</span>.</li>
+          <li class="pl-2"><strong class="text-white">Lưu & Đổi Tên Pen:</strong> Đặt tên Pen thành <code class="bg-slate-950 px-2 py-0.5 rounded text-cyan-300">CodeGym Monochromatic Practice</code> và nhấn <span class="text-cyan-400 font-mono">Save</span>.</li>
+          <li class="pl-2"><strong class="text-white">Dán Link Nộp Bài:</strong> Copy đường link CodePen từ thanh địa chỉ trình duyệt và dán vào trang nộp bài CodeGym.</li>
+        </ol>
+      </div>
+
+      <!-- Checklist Checklist -->
+      <div class="bg-cyan-950/40 border border-cyan-800/50 rounded-2xl p-6">
+        <h3 class="text-sm font-bold text-cyan-200 mb-3 flex items-center gap-2">
+          <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          Checklist Tự Kiểm Tra Trước Khi Nộp Bài:
+        </h3>
+        <ul class="space-y-2 text-xs text-cyan-100/80">
+          <li class="flex items-center gap-2">
+            <span class="text-cyan-400">✓</span> Xác định màu chính Bậc 1 (#00ADEE hoặc màu tự chọn).
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-cyan-400">✓</span> Màu nền Header/Hero đã chuyển thành màu Bậc 4 (#00BFF2).
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-cyan-400">✓</span> Phần ON SALE / PREVIEW có nền màu Bậc 1 (#00ADEE) hoặc Bậc 2 (#00B2EF).
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-cyan-400">✓</span> Phần Nội dung chính có nền màu Bậc 7 (#8DD7F7) và màu chữ ĐEN (#000000).
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-cyan-400">✓</span> Phần Footer sử dụng màu Bậc 9 (#C6E9FA) tạo nét hài hòa tổng thể.
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 border border-cyan-500/50 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 transition-all duration-300 translate-y-20 opacity-0 z-50 pointer-events-none">
+    <div class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
+    <span id="toast-message">Đã sao chép mã nguồn!</span>
+  </div>
+
+  <!-- JAVASCRIPT APP LOGIC -->
+  <script>
+    // Theme presets with exact 9 levels as defined in CodeGym lab
+    const THEMES = {
+      codegym: {
+        id: 'codegym',
+        name: 'Xanh Logo CodeGym',
+        baseHex: '#00ADEE',
+        levels: {
+          1: '#00ADEE', // Primary
+          2: '#00B2EF',
+          3: '#00B8F1',
+          4: '#00BFF2', // Header / Banner
+          5: '#33C7F5',
+          6: '#66D4F7',
+          7: '#8DD7F7', // Content cards
+          8: '#A2E1F8',
+          9: '#C6E9FA'  // Footer
+        }
+      },
+      emerald: {
+        id: 'emerald',
+        name: 'Xanh Lục Bảo',
+        baseHex: '#10B981',
+        levels: {
+          1: '#10B981',
+          2: '#059669',
+          3: '#10B981',
+          4: '#34D399',
+          5: '#6EE7B7',
+          6: '#86EFAC',
+          7: '#A7F3D0',
+          8: '#C6F6D5',
+          9: '#ECFDF5'
+        }
+      },
+      purple: {
+        id: 'purple',
+        name: 'Tím Đơn Sắc',
+        baseHex: '#7C3AED',
+        levels: {
+          1: '#7C3AED',
+          2: '#6D28D9',
+          3: '#8B5CF6',
+          4: '#A78BFA',
+          5: '#C4B5FD',
+          6: '#DDD6FE',
+          7: '#DDD6FE',
+          8: '#EDE9FE',
+          9: '#F5F3FF'
+        }
+      }
+    };
+
+    let activeThemeKey = 'codegym';
+    let currentPalette = { ...THEMES.codegym.levels };
+
+    // --- COLOR HELPER MATH FUNCTIONS ---
+    function hexToRgb(hex) {
+      let c = hex.replace('#', '');
+      if (c.length === 3) {
+        c = c.split('').map(x => x + x).join('');
+      }
+      const num = parseInt(c, 16);
+      return {
+        r: (num >> 16) & 255,
+        g: (num >> 8) & 255,
+        b: num & 255
+      };
+    }
+
+    function rgbToHex(r, g, b) {
+      return '#' + [r, g, b].map(x => {
+        const hex = Math.round(x).toString(16);
+        return hex.length === 1 ? '0' + hex : hex;
+      }).join('').toUpperCase();
+    }
+
+    function rgbToHsl(r, g, b) {
+      r /= 255; g /= 255; b /= 255;
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
+      let h, s, l = (max + min) / 2;
+
+      if (max === min) {
+        h = s = 0;
+      } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+          case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+          case g: h = (b - r) / d + 2; break;
+          case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+      }
+      return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
+    }
+
+    function hslToHex(h, s, l) {
+      l /= 100;
+      const a = s * Math.min(l, 1 - l) / 100;
+      const f = n => {
+        const k = (n + h / 30) % 12;
+        const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+        return Math.round(255 * color).toString(16).padStart(2, '0');
+      };
+      return `#${f(0)}${f(8)}${f(4)}`.toUpperCase();
+    }
+
+    // Generate 9 levels monochromatic palette dynamically from custom base hex
+    function generateDynamicPalette(baseHex) {
+      const rgb = hexToRgb(baseHex);
+      const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+      
+      // Lightness distribution for 9 levels:
+      // L1 = original base
+      // L2..L9 = gradually lighter tints
+      const lightnessSteps = [
+        Math.max(hsl.l, 35),
+        Math.min(hsl.l + 4, 45),
+        Math.min(hsl.l + 10, 52),
+        Math.min(hsl.l + 18, 62),
+        Math.min(hsl.l + 26, 70),
+        Math.min(hsl.l + 33, 78),
+        Math.min(hsl.l + 40, 85),
+        Math.min(hsl.l + 46, 91),
+        Math.min(hsl.l + 50, 96)
+      ];
+
+      const levels = {};
+      levels[1] = baseHex.toUpperCase();
+      for (let i = 2; i <= 9; i++) {
+        const targetL = lightnessSteps[i - 1];
+        // reduce saturation slightly for higher light tints
+        const targetS = Math.max(hsl.s - (i * 3), 40);
+        levels[i] = hslToHex(hsl.h, targetS, targetL);
+      }
+      return levels;
+    }
+
+    // Calculate WCAG relative luminance
+    function getLuminance(r, g, b) {
+      const a = [r, g, b].map(v => {
+        v /= 255;
+        return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+      });
+      return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+    }
+
+    // Calculate contrast ratio between 2 hex colors
+    function getContrastRatio(hex1, hex2) {
+      const rgb1 = hexToRgb(hex1);
+      const rgb2 = hexToRgb(hex2);
+      const lum1 = getLuminance(rgb1.r, rgb1.g, rgb1.b);
+      const lum2 = getLuminance(rgb2.r, rgb2.g, rgb2.b);
+      const brightest = Math.max(lum1, lum2);
+      const darkest = Math.min(lum1, lum2);
+      return (brightest + 0.05) / (darkest + 0.05);
+    }
+
+    // --- DOM UPDATERS ---
+    function updateMockWebpage() {
+      // Step 2: Header & Banner -> Level 4
+      const header = document.getElementById('mock-header');
+      if (header) {
+        header.style.backgroundColor = currentPalette[4];
+        document.getElementById('mock-level4-hex').innerText = currentPalette[4];
+      }
+
+      // Step 3: ON SALE / PREVIEW -> Level 1 (or Level 2)
+      const sale = document.getElementById('mock-sale-section');
+      if (sale) {
+        sale.style.backgroundColor = currentPalette[1];
+        document.getElementById('mock-level1-hex').innerText = `Bậc 1: ${currentPalette[1]}`;
+      }
+
+      // Step 4: Content -> Level 7 with Black text
+      const content = document.getElementById('mock-content-section');
+      if (content) {
+        content.style.backgroundColor = currentPalette[7];
+        document.getElementById('mock-level7-hex').innerText = `Màu Bậc 7: ${currentPalette[7]}`;
+      }
+
+      // Step 5: Footer -> Level 9
+      const footer = document.getElementById('mock-footer');
+      if (footer) {
+        footer.style.backgroundColor = currentPalette[9];
+        document.getElementById('mock-level9-hex').innerText = currentPalette[9];
+      }
+    }
+
+    function renderPaletteGrid() {
+      const grid = document.getElementById('palette-cards-grid');
+      if (!grid) return;
+
+      const levelDescriptions = {
+        1: 'Màu Chính (Accent / Highlight)',
+        2: 'Màu Đậm Bậc 2',
+        3: 'Màu Đậm Bậc 3',
+        4: 'Nền Header & Hero Banner',
+        5: 'Màu Trung Gian Bậc 5',
+        6: 'Màu Nhạt Bậc 6',
+        7: 'Nền Nội Dung Chính (Content)',
+        8: 'Màu Nhạt Bậc 8',
+        9: 'Nền Footer'
+      };
+
+      let html = '';
+      for (let i = 1; i <= 9; i++) {
+        const hex = currentPalette[i];
+        const rgb = hexToRgb(hex);
+        const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+        const isHighlightStep = (i === 1 || i === 4 || i === 7 || i === 9);
+
+        html += `
+          <div class="bg-slate-900 border ${isHighlightStep ? 'border-cyan-500/60 ring-1 ring-cyan-500/30' : 'border-slate-800'} rounded-xl p-3 flex flex-col justify-between shadow transition hover:scale-[1.02]">
+            <div>
+              <div class="w-full h-16 rounded-lg mb-3 border border-white/20 shadow-inner flex items-center justify-center font-extrabold text-xs" style="background-color: ${hex}; color: ${i > 5 ? '#000000' : '#ffffff'};">
+                Bậc ${i}
+              </div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-[11px] font-bold text-white">Bậc ${i}</span>
+                ${isHighlightStep ? `<span class="text-[9px] bg-cyan-500/20 text-cyan-300 px-1.5 py-0.5 rounded uppercase font-semibold">Chủ đạo</span>` : ''}
+              </div>
+              <p class="text-[10px] text-slate-400 mb-2 h-7 leading-tight">${levelDescriptions[i]}</p>
+            </div>
+            <div class="pt-2 border-t border-slate-800 text-[10px] font-mono space-y-0.5">
+              <div class="text-cyan-300 font-bold">${hex}</div>
+              <div class="text-slate-400">rgb(${rgb.r}, ${rgb.g}, ${rgb.b})</div>
+              <div class="text-slate-500">hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)</div>
+            </div>
+          </div>
+        `;
+      }
+      grid.innerHTML = html;
+    }
+
+    function renderContrastTable() {
+      const tableBody = document.getElementById('contrast-table-body');
+      if (!tableBody) return;
+
+      const rows = [
+        {
+          section: 'Header & Banner',
+          rule: 'Bước 2 (Nền Bậc 4, Chữ Trắng)',
+          bg: currentPalette[4],
+          text: '#FFFFFF'
+        },
+        {
+          section: 'ON SALE / PREVIEW',
+          rule: 'Bước 3 (Nền Bậc 1, Chữ Trắng)',
+          bg: currentPalette[1],
+          text: '#FFFFFF'
+        },
+        {
+          section: 'Nội dung chính (Cards Area)',
+          rule: 'Bước 4 (Nền Bậc 7, Chữ Đen)',
+          bg: currentPalette[7],
+          text: '#000000'
+        },
+        {
+          section: 'Footer',
+          rule: 'Bước 5 (Nền Bậc 9, Chữ Tối)',
+          bg: currentPalette[9],
+          text: '#1E293B'
+        }
+      ];
+
+      let html = '';
+      rows.forEach(row => {
+        const ratio = getContrastRatio(row.bg, row.text);
+        const passAA = ratio >= 4.5;
+        const passAAA = ratio >= 7.0;
+
+        html += `
+          <tr class="hover:bg-slate-900/50 transition">
+            <td class="p-3 font-semibold text-white">${row.section}</td>
+            <td class="p-3 text-slate-400">${row.rule}</td>
+            <td class="p-3">
+              <div class="flex items-center gap-2">
+                <span class="w-4 h-4 rounded border border-white/30 inline-block shadow-sm" style="background-color: ${row.bg}"></span>
+                <span class="font-mono text-cyan-300">${row.bg}</span>
+              </div>
+            </td>
+            <td class="p-3">
+              <div class="flex items-center gap-2">
+                <span class="w-4 h-4 rounded border border-white/30 inline-block shadow-sm" style="background-color: ${row.text}"></span>
+                <span class="font-mono text-slate-200">${row.text}</span>
+              </div>
+            </td>
+            <td class="p-3 font-mono font-bold ${ratio >= 4.5 ? 'text-emerald-400' : 'text-amber-400'}">
+              ${ratio.toFixed(2)} : 1
+            </td>
+            <td class="p-3">
+              ${passAAA 
+                ? `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded text-[10px] font-bold">WCAG AAA (Xuất sắc)</span>`
+                : passAA 
+                  ? `<span class="bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 px-2 py-0.5 rounded text-[10px] font-bold">WCAG AA (Đạt chuẩn)</span>`
+                  : `<span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded text-[10px] font-bold">Cảnh báo legibility</span>`
+              }
+            </td>
+          </tr>
+        `;
+      });
+
+      tableBody.innerHTML = html;
+    }
+
+    function generateFullHTMLCode() {
+      const codeOutput = document.getElementById('code-output-block');
+      if (!codeOutput) return;
+
+      const htmlContent = `<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeGym - Bài Thực Hành Phối Màu Đơn Tông</title>
+  <style>
+    /* BẢNG MÀU ĐƠN TÔNG (MONOCHROMATIC PALETTE) */
+    :root {
+      --color-level-1: ${currentPalette[1]}; /* Primary / Highlight */
+      --color-level-2: ${currentPalette[2]};
+      --color-level-4: ${currentPalette[4]}; /* Header / Hero Banner */
+      --color-level-7: ${currentPalette[7]}; /* Content Cards Section */
+      --color-level-9: ${currentPalette[9]}; /* Footer */
+      --text-dark: #000000;
+      --text-light: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f8fafc;
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    /* BƯỚC 2: THAY ĐỔI MÀU NỀN HEADER (MÀU BẬC 4) */
+    header {
+      background-color: var(--color-level-4);
+      color: var(--text-light);
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    /* BƯỚC 3: PHẦN ON SALE / PREVIEW (MÀU BẬC 1 HẶC BẬC 2) */
+    .sale-section {
+      background-color: var(--color-level-1);
+      color: var(--text-light);
+      padding: 20px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .sale-badge {
+      background-color: #f59e0b;
+      color: #000;
+      padding: 4px 12px;
+      border-radius: 4px;
+      margin-right: 10px;
+      display: inline-block;
+    }
+
+    /* BƯỚC 4: PHẦN NỘI DUNG CHÍNH (MÀU BẬC 7) & BƯỚC 6: GIỮ MÀU CHỮ ĐEN */
+    .content-section {
+      background-color: var(--color-level-7);
+      color: var(--text-dark);
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .content-title {
+      font-size: 22px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid rgba(0,0,0,0.1);
+      padding-bottom: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .card h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #0f172a;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #475569;
+      margin-bottom: 15px;
+    }
+
+    .card button {
+      background-color: #0f172a;
+      color: #ffffff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* BƯỚC 5: FOOTER (MÀU BẬC 9) */
+    footer {
+      background-color: var(--color-level-9);
+      color: #1e293b;
+      padding: 25px 20px;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BƯỚC 2: HEADER BANNER -->
+  <header>
+    <h1>CodeGym Store - Thực Hành Phối Màu Đơn Tông</h1>
+    <p>Nền Header sử dụng màu Bậc 4 (${currentPalette[4]})</p>
+  </header>
+
+  <!-- BƯỚC 3: SECTION ON SALE / PREVIEW -->
+  <div class="sale-section">
+    <span class="sale-badge">ON SALE</span>
+    Giảm giá 50% tất cả khóa học lập trình Web & Ebook - Nền màu Bậc 1 (${currentPalette[1]})
+  </div>
+
+  <!-- BƯỚC 4: NỘI DUNG CHÍNH (NỀN BẬC 7) -->
+  <section class="content-section">
+    <h2 class="content-title">Danh Sách Sách & Khóa Học (Nền Màu Bậc 7: ${currentPalette[7]})</h2>
+    
+    <div class="grid">
+      <div class="card">
+        <h3>Lập Trình Web Frontend</h3>
+        <p>Thực hành HTML5, CSS3, Flexbox, Grid và quy tắc phối màu chuyên nghiệp.</p>
+        <button>Đăng Ký Học</button>
+      </div>
+
+      <div class="card">
+        <h3>Thuật Toán & Giải Thuật</h3>
+        <p>Luyện tập tư duy lập trình và tối ưu hóa mã nguồn cùng giảng viên CodeGym.</p>
+        <button>Xem Chi Tiết</button>
+      </div>
+
+      <div class="card">
+        <h3>Lập Trình Java Core</h3>
+        <p>Xây dựng nền tảng vững chắc hướng đối tượng chuẩn công nghiệp.</p>
+        <button>Đăng Ký Học</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BƯỚC 5: FOOTER -->
+  <footer>
+    <p>© 2026 CodeGym Vietnam - Bài thực hành phối màu đơn tông trên trang web.</p>
+    <p>Nền Footer màu Bậc 9 (${currentPalette[9]})</p>
+  </footer>
+
+</body>
+</html>`;
+
+      codeOutput.textContent = htmlContent;
+    }
+
+    // --- THEME SELECTOR & SWITCHERS ---
+    function selectTheme(themeKey) {
+      activeThemeKey = themeKey;
+      currentPalette = { ...THEMES[themeKey].levels };
+
+      // Update button styles
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.classList.remove('border-cyan-500/50', 'bg-cyan-950/60', 'text-cyan-200');
+        btn.classList.add('border-slate-700', 'bg-slate-800/80', 'text-slate-300');
+      });
+
+      const activeBtn = document.getElementById(`btn-theme-${themeKey}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('border-slate-700', 'bg-slate-800/80', 'text-slate-300');
+        activeBtn.classList.add('border-cyan-500/50', 'bg-cyan-950/60', 'text-cyan-200');
+      }
+
+      document.getElementById('customColorPicker').value = THEMES[themeKey].baseHex;
+      document.getElementById('customColorHexDisplay').innerText = THEMES[themeKey].baseHex;
+      document.getElementById('active-theme-label').innerText = `Theme: ${THEMES[themeKey].name} (${THEMES[themeKey].baseHex})`;
+
+      refreshAllViews();
+      showToast(`Đã chuyển sang Theme: ${THEMES[themeKey].name}`);
+    }
+
+    function handleCustomColorChange(hexValue) {
+      activeThemeKey = 'custom';
+      currentPalette = generateDynamicPalette(hexValue);
+
+      document.getElementById('customColorHexDisplay').innerText = hexValue.toUpperCase();
+      document.getElementById('active-theme-label').innerText = `Theme: Tự Chọn (${hexValue.toUpperCase()})`;
+
+      // Reset preset button highlights
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.classList.remove('border-cyan-500/50', 'bg-cyan-950/60', 'text-cyan-200');
+        btn.classList.add('border-slate-700', 'bg-slate-800/80', 'text-slate-300');
+      });
+
+      refreshAllViews();
+      showToast(`Đã tạo bảng màu đơn tông từ màu: ${hexValue.toUpperCase()}`);
+    }
+
+    function refreshAllViews() {
+      updateMockWebpage();
+      renderPaletteGrid();
+      renderContrastTable();
+      generateFullHTMLCode();
+    }
+
+    // --- NAVIGATION TABS ---
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-cyan-600', 'text-white', 'shadow-md');
+        btn.classList.add('text-slate-400');
+      });
+
+      const targetContent = document.getElementById(`content-${tabId}`);
+      const targetBtn = document.getElementById(`tab-${tabId}`);
+
+      if (targetContent) targetContent.classList.remove('hidden');
+      if (targetBtn) {
+        targetBtn.classList.remove('text-slate-400');
+        targetBtn.classList.add('bg-cyan-600', 'text-white', 'shadow-md');
+      }
+
+      // Hide or show device view bar depending on tab
+      const deviceControls = document.getElementById('sandbox-viewport-controls');
+      if (deviceControls) {
+        deviceControls.style.display = tabId === 'sandbox' ? 'flex' : 'none';
+      }
+    }
+
+    // --- PREVIEW DEVICE RESIZER ---
+    function setPreviewDevice(device) {
+      const container = document.getElementById('preview-container-wrapper');
+      const devBtns = ['desktop', 'tablet', 'mobile'];
+
+      devBtns.forEach(d => {
+        const btn = document.getElementById(`dev-btn-${d}`);
+        if (btn) {
+          btn.classList.remove('text-cyan-400', 'bg-slate-800');
+          btn.classList.add('text-slate-400');
+        }
+      });
+
+      const activeBtn = document.getElementById(`dev-btn-${device}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-slate-400');
+        activeBtn.classList.add('text-cyan-400', 'bg-slate-800');
+      }
+
+      if (container) {
+        container.classList.remove('preview-device-desktop', 'preview-device-tablet', 'preview-device-mobile');
+        container.classList.add(`preview-device-${device}`);
+      }
+    }
+
+    // --- COPY TO CLIPBOARD ---
+    function copyGeneratedCode() {
+      const codeText = document.getElementById('code-output-block').textContent;
+      const textArea = document.createElement('textarea');
+      textArea.value = codeText;
+      document.body.appendChild(textArea);
+      textArea.select();
+      
+      try {
+        document.execCommand('copy');
+        showToast('Đã sao chép mã nguồn HTML vào Bộ nhớ tạm!');
+      } catch (err) {
+        showToast('Vui lòng chọn và sao chép thủ công mã nguồn.');
+      }
+      document.body.removeChild(textArea);
+    }
+
+    // --- TOAST NOTIFICATIONS ---
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      if (!toast || !toastMsg) return;
+
+      toastMsg.innerText = message;
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 2500);
+    }
+
+    // Initialize default theme on window load
+    window.onload = function() {
+      selectTheme('codegym');
+    };
+  </script>
+</body>
+</html>
